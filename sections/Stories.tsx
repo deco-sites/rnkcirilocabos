@@ -5,6 +5,7 @@ export interface Props {
 }
 
 export interface Lorem {
+  /** @default TextoAlternativo */
   alt: string;
   /** @format image-uri */
   src: string;

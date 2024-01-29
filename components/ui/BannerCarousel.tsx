@@ -19,10 +19,10 @@ export interface Banner {
   mobile: ImageWidget;
   /** @description Image's alt text */
   alt: string;
-  /** 
+  /**
    * @default /
    * @description when user clicks on the image, go to this link
-   * */
+   */
   href: string;
 }
 

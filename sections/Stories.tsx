@@ -13,10 +13,10 @@ export interface Storie {
 
 export interface Props {
   stories: Storie[];
-  /** 
+  /**
    * @default 12px
    * @description margin no eixo Y (cima e baixo)
-   * */
+   */
   marginY?: "12px" | "24px";
 }
 
@@ -25,8 +25,8 @@ const DEFAULT_PROPS = {
     href: "/",
     src: "https://placehold.co/85",
     size: 85,
-    title: "Title"
-  }]
+    title: "Title",
+  }],
 };
 
 export default function Stories(props: Props) {
@@ -34,7 +34,11 @@ export default function Stories(props: Props) {
 
   return (
     <div className="container px-3">
-      <ul className={`flex items-center sm:justify-center gap-4 overflow-x-auto ${marginY ? "my-[" + marginY + "]" : ""}`}>
+      <ul
+        className={`flex items-center sm:justify-center gap-4 overflow-x-auto ${
+          marginY ? "my-[" + marginY + "]" : ""
+        }`}
+      >
         {stories && stories.length > 0 && stories.map((storie) => {
           return (
             <a href={storie.href}>
@@ -45,7 +49,9 @@ export default function Stories(props: Props) {
                 width={storie.size}
                 height={storie.size}
               />
-              {storie.title ? <p className="text-center">{storie.title}</p> : ''}
+              {storie.title
+                ? <p className="text-center">{storie.title}</p>
+                : ""}
             </a>
           );
         })}

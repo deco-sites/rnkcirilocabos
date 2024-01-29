@@ -20,7 +20,7 @@ export default function SoloBanner({ alt, src }: Props) {
         width={1376}
         height={65}
         class="object-cover h-auto mx-auto"
-      />  
+      />
     </div>
-  )
+  );
 }

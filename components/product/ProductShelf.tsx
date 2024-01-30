@@ -18,8 +18,8 @@ export interface Props {
   description?: string;
   layout?: {
     numberOfSliders?: {
-      mobile?: 1 | 2 | 3 | 4 | 5;
-      desktop?: 1 | 2 | 3 | 4 | 5;
+      mobile?: 1 | 2 | 3 | 4 | 5 | 6;
+      desktop?: 1 | 2 | 3 | 4 | 5 | 6;
     };
     headerAlignment?: "center" | "left";
     headerfontSize?: "Normal" | "Large" | "Small";
@@ -47,6 +47,7 @@ function ProductShelf({
     3: "md:w-1/3",
     4: "md:w-1/4",
     5: "md:w-1/5",
+    6: "md:w-1/6",
   };
 
   const slideMobile = {
@@ -55,6 +56,7 @@ function ProductShelf({
     3: "w-1/3",
     4: "w-1/4",
     5: "w-1/5",
+    6: "w-1/6",
   };
   return (
     <div class="w-full container py-8 flex flex-col gap-6 lg:py-10">

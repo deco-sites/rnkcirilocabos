@@ -7,6 +7,9 @@ export default {
   theme: {
     container: { center: true },
     extend: {
+      colors: {
+        "danger": "#fc2726",
+      },
       animation: {
         sliding: "sliding 30s linear infinite",
       },

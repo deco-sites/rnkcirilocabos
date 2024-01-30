@@ -13,6 +13,7 @@ import { relative } from "$store/sdk/url.ts";
 
 export interface Layout {
   basics?: {
+    /** @default Left */
     contentAlignment?: "Left" | "Center";
     oldPriceSize?: "Small" | "Normal";
     ctaText?: string;
@@ -56,8 +57,8 @@ interface Props {
   platform?: Platform;
 }
 
-const WIDTH = 200;
-const HEIGHT = 279;
+const WIDTH = 184;
+const HEIGHT = 184;
 
 function ProductCard({
   product,
@@ -113,12 +114,13 @@ function ProductCard({
   return (
     <div
       id={id}
-      class={`card card-compact group w-full ${
+      class={`card card-compact group w-full sm:px-0 px-3 ${
         align === "center" ? "text-center" : "text-start"
       } ${l?.onMouseOver?.showCardShadow ? "lg:hover:card-bordered" : ""}
         ${
-        l?.onMouseOver?.card === "Move up" &&
-        "duration-500 transition-translate ease-in-out lg:hover:-translate-y-2"
+        l?.onMouseOver?.card === "Move up"
+          ? "duration-500 transition-translate ease-in-out lg:hover:-translate-y-2"
+          : ""
       }
       `}
       data-deco="view-product"
@@ -145,7 +147,6 @@ function ProductCard({
         style={{ aspectRatio: `${WIDTH} / ${HEIGHT}` }}
       >
         {/* Wishlist button */}
-
         <div
           class={`absolute top-2 z-10 flex items-center
             ${
@@ -174,16 +175,21 @@ function ProductCard({
               />
             )}
           </div>
-          {/* Discount % */}
-          {!l?.hide?.discount && (
-            <div class="text-sm bg-base-100 p-[10px]">
-              <span class="text-base-content font-bold">
-                {listPrice && price
-                  ? `${Math.round(((listPrice - price) / listPrice) * 100)}% `
-                  : ""}
-              </span>
-              OFF
-            </div>
+        </div>
+
+        {/* Discount % */}
+        <div class="absolute left-0 bottom-2 z-10">
+          {!l?.hide?.discount && listPrice && price && (
+            <>
+              <div class="inline-block rounded-t-lg text-[12px] bg-[#3c3c44] py-[5px] px-[8px]">
+                <span class="text-white font-normal">
+                  {`-${Math.round(((listPrice - price) / listPrice) * 100)}%`}
+                </span>
+              </div>
+              <div class="text-[12px] bg-danger uppercase text-white px-[8px] py-[2px]">
+                Economize: {`${formatPrice(listPrice - price)}`}
+              </div>
+            </>
           )}
         </div>
 
@@ -273,7 +279,7 @@ function ProductCard({
                 )
                 : (
                   <h2
-                    class="truncate text-base lg:text-lg text-base-content uppercase font-normal"
+                    class="text-[13px] font-normal line-clamp-3 text-black"
                     dangerouslySetInnerHTML={{ __html: name ?? "" }}
                   />
                 )}
@@ -296,21 +302,25 @@ function ProductCard({
           : (
             <div class="flex flex-col gap-2">
               <div
-                class={`flex flex-col gap-0 ${
-                  l?.basics?.oldPriceSize === "Normal"
-                    ? "lg:flex-row-reverse lg:gap-2"
-                    : ""
+                class={`flex flex-col gap-2 ${
+                  l?.basics?.oldPriceSize === "Normal" ? "" : ""
                 } ${align === "center" ? "justify-center" : "justify-end"}`}
               >
                 <div
-                  class={`line-through text-base-300 text-xs font-light ${
+                  class={`text-base-300 text-xs font-light ${
                     l?.basics?.oldPriceSize === "Normal" ? "lg:text-sm" : ""
                   }`}
                 >
-                  {formatPrice(listPrice, offers?.priceCurrency)}
+                  De:{" "}
+                  <span class="line-through">
+                    {formatPrice(listPrice, offers?.priceCurrency)}
+                  </span>
                 </div>
-                <div class="text-base-content lg:text-sm font-light">
-                  {formatPrice(price, offers?.priceCurrency)}
+                <div class="text-black">
+                  Por:{" "}
+                  <span class="text-danger lg:text-lg text-sm font-bold">
+                    {formatPrice(price, offers?.priceCurrency)}
+                  </span>
                 </div>
               </div>
             </div>
@@ -329,7 +339,7 @@ function ProductCard({
                   ""
                 )
                 : (
-                  <div class="text-base-300 font-light text-sm truncate">
+                  <div class="text-black font-light text-sm truncate">
                     ou {installments}
                   </div>
                 )}

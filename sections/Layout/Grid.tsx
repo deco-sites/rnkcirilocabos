@@ -20,7 +20,7 @@ export interface GridMobile {
     | "12"
     | "None";
   rows?: "1" | "2" | "3" | "4" | "5" | "6" | "None";
-  /** @default 8 */
+  /** @default 4 */
   gap?: "1" | "2" | "4" | "8" | "12" | "16";
   /** @default Center */
   placeItems?: "Center" | "Start" | "End" | "Baseline" | "Stretch";
@@ -44,7 +44,7 @@ export interface GridDesktop {
     | "12"
     | "None";
   rows?: "1" | "2" | "3" | "4" | "5" | "6" | "None";
-  /** @default 8 */
+  /** @default 4 */
   gap?: "1" | "2" | "4" | "8" | "12" | "16";
   /** @default Center */
   placeItems?: "Center" | "Start" | "End" | "Baseline" | "Stretch";

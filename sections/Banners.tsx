@@ -33,7 +33,7 @@ export interface Banners {
 
 function GridBanners({ banners, colsDesk, colsMobi }: Banners) {
   return (
-    <Grid 
+    <Grid
       desktop={{ cols: colsDesk, gap: "4", flow: "Row" }}
       mobile={{ cols: colsMobi, gap: "4", flow: "Row" }}
     >
@@ -42,27 +42,30 @@ function GridBanners({ banners, colsDesk, colsMobi }: Banners) {
         return (
           <div>
             <a href={href}>
-              <Image 
+              <Image
                 src={src}
                 alt={alt}
                 width={width}
                 height={height}
-                class="rounded object-cover" />
+                class="rounded object-cover"
+              />
             </a>
           </div>
         );
       })}
     </Grid>
-  )
+  );
 }
 
 function Banners({ banners, colsDesk, colsMobi }: Banners) {
   return (
     <>
-      <Container children={{
-        Component: GridBanners,
-        props: { banners, colsDesk, colsMobi }
-      }} />
+      <Container
+        children={{
+          Component: GridBanners,
+          props: { banners, colsDesk, colsMobi },
+        }}
+      />
     </>
   );
 }

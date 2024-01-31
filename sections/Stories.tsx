@@ -35,23 +35,21 @@ function GetStories({ stories, marginDeskY, marginMobiY }: Props) {
     <ul
       class={clx(
         "flex items-center sm:justify-center gap-4 overflow-x-auto",
-        margin.y.desk[marginDeskY as keyof object ?? 'default'],
-        margin.y.mobi[marginMobiY as keyof object ?? 'default']
+        margin.y.desk[marginDeskY as keyof object ?? "default"],
+        margin.y.mobi[marginMobiY as keyof object ?? "default"],
       )}
     >
       {stories && stories.length > 0 && stories.map((storie) => {
         return (
           <a href={storie.href}>
-            <Image 
+            <Image
               class="rounded-full"
               src={storie.src}
               alt={storie.alt}
               width={storie.size}
               height={storie.size}
             />
-            {storie.title
-              ? <p className="text-center">{storie.title}</p>
-              : ""}
+            {storie.title ? <p className="text-center">{storie.title}</p> : ""}
           </a>
         );
       })}
@@ -62,10 +60,12 @@ function GetStories({ stories, marginDeskY, marginMobiY }: Props) {
 function Stories({ stories, marginDeskY, marginMobiY }: Props) {
   return (
     <>
-      <Container children={{
-        Component: GetStories,
-        props: { stories, marginDeskY, marginMobiY }
-      }}/>
+      <Container
+        children={{
+          Component: GetStories,
+          props: { stories, marginDeskY, marginMobiY },
+        }}
+      />
     </>
   );
 }

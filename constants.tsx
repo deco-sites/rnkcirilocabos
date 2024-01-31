@@ -473,7 +473,7 @@ export const margin = {
       "default": "lg:my-14",
       "lg": "lg:my-16",
       "xl": "lg:my-20",
-      "xxl": "lg:my-24"
+      "xxl": "lg:my-24",
     },
     mobi: {
       "none": "my-0",
@@ -481,9 +481,9 @@ export const margin = {
       "default": "my-12",
       "lg": "my-14",
       "xl": "my-16",
-      "xxl": "my-20"
-    }
-  }
+      "xxl": "my-20",
+    },
+  },
 };
 
 export function getButtonClasses(style: ButtonType) {

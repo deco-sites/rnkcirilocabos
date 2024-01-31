@@ -42,7 +42,7 @@ function GetSoloBanner(
       class={clx(
         "object-cover h-auto mx-auto",
         margin.y.desk[deskMarginY ?? "none"],
-        margin.y.mobi[mobiMarginY ?? "none"]
+        margin.y.mobi[mobiMarginY ?? "none"],
       )}
     />
   );

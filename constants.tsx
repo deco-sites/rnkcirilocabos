@@ -465,6 +465,27 @@ export const buttonClasses = {
   "Tertiary": "btn-accent",
 };
 
+export const margin = {
+  y: {
+    desk: {
+      "none": "my-0",
+      "sm": "lg:my-12",
+      "default": "lg:my-14",
+      "lg": "lg:my-16",
+      "xl": "lg:my-20",
+      "xxl": "lg:my-24"
+    },
+    mobi: {
+      "none": "my-0",
+      "sm": "my-10",
+      "default": "my-12",
+      "lg": "my-14",
+      "xl": "my-16",
+      "xxl": "my-20"
+    }
+  }
+};
+
 export function getButtonClasses(style: ButtonType) {
   const allButtonClasses = `btn ${buttonClasses[style?.color || "Default"]} ${
     style?.outline ? "btn-outline" : ""

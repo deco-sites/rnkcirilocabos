@@ -465,10 +465,12 @@ export const buttonClasses = {
   "Tertiary": "btn-accent",
 };
 
+export type MarginType = "none" | "sm" | "default" | "lg" | "xl" | "xxl";
+
 export const margin = {
   y: {
     desk: {
-      "none": "my-0",
+      "none": "",
       "sm": "lg:my-12",
       "default": "lg:my-14",
       "lg": "lg:my-16",
@@ -476,7 +478,7 @@ export const margin = {
       "xxl": "lg:my-24",
     },
     mobi: {
-      "none": "my-0",
+      "none": "",
       "sm": "my-10",
       "default": "my-12",
       "lg": "my-14",
@@ -484,7 +486,76 @@ export const margin = {
       "xxl": "my-20",
     },
   },
+  top: {
+    desk: {
+      "none": "",
+      "sm": "lg:mt-12",
+      "default": "lg:mt-14",
+      "lg": "lg:mt-16",
+      "xl": "lg:mt-20",
+      "xxl": "lg:mt-24",
+    },
+    mobi: {
+      "none": "",
+      "sm": "mt-10",
+      "default": "mt-12",
+      "lg": "mt-14",
+      "xl": "mt-16",
+      "xxl": "mt-20",
+    },
+  },
+  bottom: {
+    desk: {
+      "none": "",
+      "sm": "lg:mb-12",
+      "default": "lg:mb-14",
+      "lg": "lg:mb-16",
+      "xl": "lg:mb-20",
+      "xxl": "lg:mb-24",
+    },
+    mobi: {
+      "none": "",
+      "sm": "mb-10",
+      "default": "mb-12",
+      "lg": "mb-14",
+      "xl": "mb-16",
+      "xxl": "mb-20",
+    },
+  },
 };
+
+export interface MarginInterface {
+  /**
+   * @default none
+   * @description margin no eixo Y (cima e baixo)
+   */
+  deskMarginY?: MarginType;
+  /**
+   * @default none
+   * @description margin no eixo Y (cima e baixo)
+   */
+  mobiMarginY?: MarginType;
+  /**
+   * @default none
+   * @description margin do topo
+   */
+  deskMarginTop?: MarginType;
+  /**
+   * @default none
+   * @description margin do topo
+   */
+  mobiMarginTop?: MarginType;
+  /**
+   * @default none
+   * @description margin da parte inferior
+   */
+  deskMarginBottom?: MarginType;
+  /**
+   * @default none
+   * @description margin da parte inferior
+   */
+  mobiMarginBottom?: MarginType;
+}
 
 export function getButtonClasses(style: ButtonType) {
   const allButtonClasses = `btn ${buttonClasses[style?.color || "Default"]} ${

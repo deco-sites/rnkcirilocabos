@@ -1,8 +1,10 @@
 import { ImageWidget } from "apps/admin/widgets.ts";
 import { clx } from "../sdk/clx.ts";
-import { margin } from "../constants.tsx";
+import { margin as MarginObject } from "../constants.tsx";
+import type { MarginInterface } from "../constants.tsx";
 import Image from "apps/website/components/Image.tsx";
 import Container from "./Layout/Container.tsx";
+import Breadcrumb from "../components/ui/Breadcrumb.tsx";
 
 export interface Props {
   /**
@@ -13,38 +15,34 @@ export interface Props {
    * @description Source (URL) da Imagem
    */
   src: ImageWidget;
-  /**
-   * @default "default"
-   * @description margin no eixo Y (cima e baixo)
-   */
-  deskMarginY?: "none" | "sm" | "default" | "lg" | "xl" | "xxl";
-  /**
-   * @default "default"
-   * @description margin no eixo Y (cima e baixo)
-   */
-  mobiMarginY?: "none" | "sm" | "default" | "lg" | "xl" | "xxl";
+  margin?: MarginInterface;
 }
 
 function GetSoloBanner(
   {
     alt,
     src,
-    deskMarginY,
-    mobiMarginY,
+    margin,
   }: Props,
 ) {
   return (
-    <Image
-      src={src}
-      alt={alt}
-      width={1376}
-      height={65}
-      class={clx(
-        "object-cover h-auto mx-auto",
-        margin.y.desk[deskMarginY ?? "none"],
-        margin.y.mobi[mobiMarginY ?? "none"],
-      )}
-    />
+    <>
+      <Image
+        src={src}
+        alt={alt}
+        width={1376}
+        height={65}
+        class={clx(
+          "object-cover h-auto mx-auto",
+          MarginObject.y.desk[margin?.deskMarginY ?? "none"],
+          MarginObject.y.mobi[margin?.mobiMarginY ?? "none"],
+          MarginObject.top.desk[margin?.deskMarginTop ?? "none"],
+          MarginObject.top.mobi[margin?.mobiMarginTop ?? "none"],
+          MarginObject.bottom.desk[margin?.deskMarginBottom ?? "none"],
+          MarginObject.bottom.mobi[margin?.mobiMarginBottom ?? "none"],
+        )}
+      />
+    </>
   );
 }
 

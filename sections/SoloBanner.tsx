@@ -4,7 +4,6 @@ import { margin as MarginObject } from "../constants.tsx";
 import type { MarginInterface } from "../constants.tsx";
 import Image from "apps/website/components/Image.tsx";
 import Container from "./Layout/Container.tsx";
-import Breadcrumb from "../components/ui/Breadcrumb.tsx";
 
 export interface Props {
   /**

@@ -1,5 +1,7 @@
 import { margin } from "../constants.tsx";
 import { clx } from "../sdk/clx.ts";
+import { margin as MarginObject } from "../constants.tsx";
+import type { MarginInterface } from "../constants.tsx";
 import type { ImageWidget } from "apps/admin/widgets.ts";
 import Container from "./Layout/Container.tsx";
 import Image from "apps/website/components/Image.tsx";
@@ -18,25 +20,16 @@ export interface Storie {
 
 export interface Props {
   stories: Storie[];
-  /**
-   * @default "default"
-   * @description margin no eixo Y (cima e baixo)
-   */
-  marginDeskY?: "none" | "sm" | "default" | "lg" | "xl" | "xxl";
-  /**
-   * @default "default"
-   * @description margin no eixo Y (cima e baixo)
-   */
-  marginMobiY?: "none" | "sm" | "default" | "lg" | "xl" | "xxl";
+  margin: MarginInterface;
 }
 
-function GetStories({ stories, marginDeskY, marginMobiY }: Props) {
+function GetStories({ stories, margin }: Props) {
   return (
     <ul
       class={clx(
         "flex items-center sm:justify-center gap-4 overflow-x-auto",
-        margin.y.desk[marginDeskY as keyof object ?? "default"],
-        margin.y.mobi[marginMobiY as keyof object ?? "default"],
+        MarginObject.y.desk[margin?.deskMarginY ?? "none"],
+        MarginObject.y.mobi[margin?.mobiMarginY ?? "none"],
       )}
     >
       {stories && stories.length > 0 && stories.map((storie) => {
@@ -57,13 +50,13 @@ function GetStories({ stories, marginDeskY, marginMobiY }: Props) {
   );
 }
 
-function Stories({ stories, marginDeskY, marginMobiY }: Props) {
+function Stories(props: Props) {
   return (
     <>
       <Container
         children={{
           Component: GetStories,
-          props: { stories, marginDeskY, marginMobiY },
+          props: { ...props },
         }}
       />
     </>

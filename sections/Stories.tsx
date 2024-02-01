@@ -19,7 +19,7 @@ export interface Storie {
 
 export interface Props {
   stories: Storie[];
-  margin: MarginInterface;
+  margin?: MarginInterface;
 }
 
 function GetStories({ stories, margin }: Props) {

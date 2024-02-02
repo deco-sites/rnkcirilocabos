@@ -1,12 +1,13 @@
-import { clx } from "../../sdk/clx.ts";
+import { clx } from "$store/sdk/clx.ts";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import type { ImageWidget } from "apps/admin/widgets.ts";
 import Alert from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
-import { header } from "../../constants.tsx";
+import { header } from "$store/constants.tsx";
 import type { Props as ProductShelfProps } from "../product/ProductShelf.tsx";
+import type { AvailableIcons } from "$store/components/ui/Icon.tsx";
 
 /** @titleBy url */
 export interface NavigationTemplate {
@@ -49,8 +50,14 @@ export interface Buttons {
   hideCartButton?: boolean;
 }
 
+/** @titleBy text */
+export interface Alerts {
+  text?: string;
+  icon?: AvailableIcons;
+}
+
 export interface Props {
-  alerts?: string[];
+  alerts?: Alerts[];
 
   /** @title Search Bar */
   searchbar?: Omit<SearchbarProps, "platform">;

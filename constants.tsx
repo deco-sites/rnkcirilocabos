@@ -557,6 +557,17 @@ export interface MarginInterface {
   mobiMarginBottom?: MarginType;
 }
 
+export const header = {
+  desk: {
+    top: "lg:top-[184px]",
+    height: "lg:h-[184px]",
+  },
+  mobi: {
+    top: "top-[94px]",
+    height: "h-[94px]",
+  },
+};
+
 export function getButtonClasses(style: ButtonType) {
   const allButtonClasses = `btn ${buttonClasses[style?.color || "Default"]} ${
     style?.outline ? "btn-outline" : ""

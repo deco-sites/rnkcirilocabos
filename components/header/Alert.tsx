@@ -15,11 +15,11 @@ function Alert({ alerts = [], interval = 5 }: Props) {
   const id = useId();
 
   return (
-    <div id={id}>
+    <div id={id} class="flex items-start h-[24px] lg:mb-[27px] mb-3">
       <Slider class="carousel carousel-center w-screen bg-secondary gap-6">
         {alerts.map((alert, index) => (
           <Slider.Item index={index} class="carousel-item">
-            <span class="text-sm text-secondary-content flex justify-center items-center w-screen h-[38px]">
+            <span class="text-[12px] text-secondary-content flex justify-center items-center w-screen h-[24px]">
               {alert}
             </span>
           </Slider.Item>

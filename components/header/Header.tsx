@@ -1,3 +1,4 @@
+import { clx } from "../../sdk/clx.ts";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
@@ -5,7 +6,7 @@ import type { ImageWidget } from "apps/admin/widgets.ts";
 import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Alert from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
-import { headerHeight } from "./constants.ts";
+import { header } from "../../constants.tsx";
 
 export interface Logo {
   src: ImageWidget;
@@ -72,29 +73,37 @@ function Header({
     height: 16,
     alt: "Logo",
   },
-  logoPosition = "center",
+  logoPosition = "left",
   buttons,
 }: Props) {
   const platform = usePlatform();
   const items = navItems ?? [];
-
+  //style={{ height: headerHeight }}
   return (
     <>
-      <header style={{ height: headerHeight }}>
+      <header
+        class={clx(
+          "block",
+          header.desk.height,
+          header.mobi.height,
+        )}
+      >
         <Drawers
           menu={{ items }}
           searchbar={searchbar}
           platform={platform}
         >
-          <div class="bg-base-100 fixed w-full z-50">
+          <div class="bg-danger fixed w-full z-50">
             {alerts && alerts.length > 0 && <Alert alerts={alerts} />}
-            <Navbar
-              items={items}
-              searchbar={searchbar && { ...searchbar, platform }}
-              logo={logo}
-              logoPosition={logoPosition}
-              buttons={buttons}
-            />
+            <div class="container px-3">
+              <Navbar
+                items={items}
+                searchbar={searchbar && { ...searchbar, platform }}
+                logo={logo}
+                logoPosition={logoPosition}
+                buttons={buttons}
+              />
+            </div>
           </div>
         </Drawers>
       </header>

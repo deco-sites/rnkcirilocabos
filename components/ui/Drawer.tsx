@@ -1,3 +1,5 @@
+import { clx } from "../../sdk/clx.ts";
+import { header } from "../../constants.tsx";
 import { useId } from "$store/sdk/useId.ts";
 import { useSignal } from "@preact/signals";
 import { ComponentChildren } from "preact";
@@ -53,7 +55,13 @@ function Drawer(props: Props) {
         {children}
       </div>
 
-      <aside class="drawer-side h-full z-50 overflow-hidden">
+      <aside
+        class={clx(
+          "drawer-side h-full z-50 overflow-hidden",
+          header.desk.top,
+          header.mobi.top,
+        )}
+      >
         <label for={id} class="drawer-overlay" />
         {!lazy.value && aside}
       </aside>

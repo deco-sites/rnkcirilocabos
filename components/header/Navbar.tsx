@@ -1,3 +1,4 @@
+import { clx } from "$store/sdk/clx.ts";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import Icon from "$store/components/ui/Icon.tsx";
 import { MenuButton, SearchButton } from "$store/islands/Header/Buttons.tsx";
@@ -9,14 +10,13 @@ import CartButtonWake from "$store/islands/Header/Cart/wake.tsx";
 import CartButtonNuvemshop from "$store/islands/Header/Cart/nuvemshop.tsx";
 import Searchbar from "$store/islands/Header/Searchbar.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
-import type { SiteNavigationElement } from "apps/commerce/types.ts";
+import type { Navigation } from "./Header.tsx";
 import Image from "apps/website/components/Image.tsx";
 import NavItem from "./NavItem.tsx";
-import { navbarHeight } from "./constants.ts";
 import { Buttons, Logo } from "$store/components/header/Header.tsx";
 
 function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
-  items: SiteNavigationElement[];
+  items: Navigation[];
   searchbar?: SearchbarProps;
   logo?: Logo;
   buttons?: Buttons;
@@ -33,7 +33,6 @@ function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
           <a
             href="/"
             class="flex-grow inline-flex items-center justify-center"
-            // style={{ minHeight: navbarHeight }}
             aria-label="Store logo"
           >
             <Image
@@ -46,7 +45,6 @@ function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
         )}
 
         <div class="flex justify-end gap-1">
-          {/* <SearchButton /> */}
           {platform === "vtex" && <CartButtonVTEX />}
           {platform === "vnda" && <CartButtonVDNA />}
           {platform === "wake" && <CartButtonWake />}
@@ -57,13 +55,12 @@ function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
       </div>
 
       {/* Desktop Version */}
-      <div class="hidden lg:grid lg:grid-cols-[auto_minmax(900px,_1fr)_auto] items-center w-full gap-3">
+      <div class="hidden lg:grid lg:grid-cols-[auto_minmax(500px,_1fr)_auto] items-center w-full gap-3">
         <div
-          class={`flex ${
-            logoPosition === "left"
-              ? "justify-start -order-1"
-              : "justify-center"
-          }`}
+          class={clx(
+            "flex",
+            `${logoPosition === "left" ? "justify-start" : "justify-center"}`,
+          )}
         >
           {logo && (
             <a
@@ -76,6 +73,7 @@ function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
                 alt={logo.alt}
                 width={logo.width || 100}
                 height={logo.height || 13}
+                style={{ minWidth: 100 }}
               />
             </a>
           )}
@@ -84,6 +82,23 @@ function Navbar({ items, searchbar, logo, buttons, logoPosition = "left" }: {
         <Searchbar searchbar={searchbar} />
 
         <div class="flex-none flex items-center justify-end gap-2 col-span-1 text-white">
+          <div class="text-white text-xs">
+            <p>SAC (11) 3224-1020</p>
+            <p>
+              <a
+                href="https://api.whatsapp.com/send?phone=5511946265235"
+                class="underline flex items-center gap-2"
+              >
+                <Icon id="WhatsApp" size={20} />
+                (11) 9462-65235
+              </a>
+            </p>
+            <p>
+              <a href="mailto:sac@cirilocabos.com.br" class="underline">
+                sac@cirilocabos.com.br
+              </a>
+            </p>
+          </div>
           {!buttons?.hideSearchButton && (
             <div class="flex items-center text-xs font-thin gap-1">
               <SearchButton />SEARCH

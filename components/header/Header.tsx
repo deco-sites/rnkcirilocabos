@@ -3,11 +3,39 @@ import type { Props as SearchbarProps } from "$store/components/search/Searchbar
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import type { ImageWidget } from "apps/admin/widgets.ts";
-import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Alert from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
 import { header } from "../../constants.tsx";
+import type { Props as ProductShelfProps } from "../product/ProductShelf.tsx";
 
+/** @titleBy url */
+export interface NavigationTemplate {
+  /** The name of the item. */
+  name?: string;
+  /** URL of the item. */
+  url?: string;
+}
+
+export interface Navigation extends NavigationTemplate {
+  children?: Array<
+    NavigationTemplate & {
+      children?: Array<
+        NavigationTemplate & {
+          children?: Array<
+            NavigationTemplate & {
+              children?: Array<
+                NavigationTemplate & {
+                  children?: NavigationTemplate[];
+                }
+              >;
+            }
+          >;
+        }
+      >;
+    }
+  >;
+  shelf?: ProductShelfProps;
+}
 export interface Logo {
   src: ImageWidget;
   alt: string;
@@ -31,7 +59,7 @@ export interface Props {
    * @title Navigation items
    * @description Navigation items used both on mobile and desktop menus
    */
-  navItems?: SiteNavigationElement[] | null;
+  navItems?: Navigation[] | null;
 
   /** @title Logo */
   logo?: Logo;
@@ -46,22 +74,18 @@ function Header({
   searchbar,
   navItems = [
     {
-      "@type": "SiteNavigationElement",
       name: "Feminino",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Masculino",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Sale",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Linktree",
       url: "/",
     },
@@ -78,7 +102,7 @@ function Header({
 }: Props) {
   const platform = usePlatform();
   const items = navItems ?? [];
-  //style={{ height: headerHeight }}
+
   return (
     <>
       <header

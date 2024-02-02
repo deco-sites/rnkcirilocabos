@@ -1,11 +1,10 @@
-import type { SiteNavigationElement } from "apps/commerce/types.ts";
-import Image from "apps/website/components/Image.tsx";
-import { headerHeight } from "./constants.ts";
+import { clx } from "$store/sdk/clx.ts";
+import type { Navigation } from "./Header.tsx";
+import { header } from "$store/constants.tsx";
+import ProductShelf from "$store/components/product/ProductShelf.tsx";
 
-function NavItem({ item }: { item: SiteNavigationElement }) {
-  const { url, name, children } = item;
-  const image = item?.image?.[0];
-
+function NavItem({ item }: { item: Navigation }) {
+  const { url, name, children, shelf } = item;
   return (
     <li class="group flex items-center text-white">
       <a
@@ -18,21 +17,28 @@ function NavItem({ item }: { item: SiteNavigationElement }) {
       {children && children.length > 0 &&
         (
           <div
-            class="fixed opacity-0 hover:opacity-100 group-hover:opacity-100 bg-base-100 z-50 items-start justify-center gap-6 border-t border-b-2 border-base-200 w-screen transition pointer-events-none hover:pointer-events-auto group-hover:pointer-events-auto"
-            style={{ top: headerHeight, left: "0px" }}
+            class={clx(
+              "fixed opacity-0 hover:opacity-100 group-hover:opacity-100 bg-base-100 w-screen",
+              "z-50 items-start justify-center gap-6 border-t border-b-2 border-base-200 transition",
+              "pointer-events-none hover:pointer-events-auto group-hover:pointer-events-auto left-0",
+              header.desk.top,
+            )}
           >
-            <div class="container px-3">
-              <ul>
+            <div class="container px-3 grid grid-cols-[250px_auto]">
+              <ul class="border-r [border-image:linear-gradient(180deg,#fff,#fc2726,#fff)_1_100%]">
                 {children.map((node) => (
                   <li class="py-6">
-                    <a class="text-black hover:underline" href={node.url}>
+                    <a class="text-danger hover:text-black" href={node.url}>
                       <span>{node.name}</span>
                     </a>
 
                     <ul class="flex flex-col gap-1 mt-4">
                       {node.children?.map((leaf) => (
                         <li>
-                          <a class="text-black hover:underline" href={leaf.url}>
+                          <a
+                            class="text-black hover:text-danger"
+                            href={leaf.url}
+                          >
                             <span class="text-xs">{leaf.name}</span>
                           </a>
                         </li>
@@ -41,19 +47,12 @@ function NavItem({ item }: { item: SiteNavigationElement }) {
                   </li>
                 ))}
               </ul>
-            </div>
-            {
-              /* {image?.url && (
-              <Image
-                class="p-6"
-                src={image.url}
-                alt={image.alternateName}
-                width={300}
-                height={332}
-                loading="lazy"
+              <ProductShelf
+                products={shelf?.products ?? []}
+                cardLayout={shelf?.cardLayout ?? {}}
+                layout={shelf?.layout ?? {}}
               />
-            )} */
-            }
+            </div>
           </div>
         )}
     </li>

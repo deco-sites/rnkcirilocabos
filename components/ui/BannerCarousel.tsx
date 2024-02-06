@@ -2,7 +2,6 @@ import {
   SendEventOnClick,
   SendEventOnView,
 } from "$store/components/Analytics.tsx";
-import Button from "$store/components/ui/Button.tsx";
 import Icon from "$store/components/ui/Icon.tsx";
 import Slider from "$store/components/ui/Slider.tsx";
 import SliderJS from "$store/islands/SliderJS.tsx";
@@ -20,16 +19,11 @@ export interface Banner {
   mobile: ImageWidget;
   /** @description Image's alt text */
   alt: string;
-  action?: {
-    /** @description when user clicks on the image, go to this link */
-    href: string;
-    /** @description Image text title */
-    title: string;
-    /** @description Image text subtitle */
-    subTitle: string;
-    /** @description Button label */
-    label: string;
-  };
+  /**
+   * @default /
+   * @description when user clicks on the image, go to this link
+   */
+  href: string;
 }
 
 export interface Props {
@@ -59,12 +53,7 @@ const DEFAULT_PROPS = {
   images: [
     {
       alt: "/feminino",
-      action: {
-        title: "New collection",
-        subTitle: "Main title",
-        label: "Explore collection",
-        href: "/",
-      },
+      href: "/",
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/2291/c007e481-b1c6-4122-9761-5c3e554512c1",
       desktop:
@@ -72,12 +61,7 @@ const DEFAULT_PROPS = {
     },
     {
       alt: "/feminino",
-      action: {
-        title: "New collection",
-        subTitle: "Main title",
-        label: "Explore collection",
-        href: "/",
-      },
+      href: "/",
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/2291/c007e481-b1c6-4122-9761-5c3e554512c1",
       desktop:
@@ -85,12 +69,7 @@ const DEFAULT_PROPS = {
     },
     {
       alt: "/feminino",
-      action: {
-        title: "New collection",
-        subTitle: "Main title",
-        label: "Explore collection",
-        href: "/",
-      },
+      href: "/",
       mobile:
         "https://ozksgdmyrqcxcwhnbepg.supabase.co/storage/v1/object/public/assets/2291/c007e481-b1c6-4122-9761-5c3e554512c1",
       desktop:
@@ -107,32 +86,15 @@ function BannerItem(
     alt,
     mobile,
     desktop,
-    action,
+    href,
   } = image;
 
   return (
     <a
       id={id}
-      href={action?.href ?? "#"}
-      aria-label={action?.label}
+      href={href ?? "#"}
       class="relative overflow-y-hidden w-full"
     >
-      {action && (
-        <div class="absolute top-0 md:bottom-0 bottom-1/2 left-0 right-0 sm:right-auto max-w-[407px] flex flex-col justify-end gap-4 px-8 py-12">
-          <span class="text-2xl font-light text-base-100">
-            {action.title}
-          </span>
-          <span class="font-normal text-4xl text-base-100">
-            {action.subTitle}
-          </span>
-          <Button
-            class="bg-base-100 text-sm font-light py-4 px-6 w-fit"
-            aria-label={action.label}
-          >
-            {action.label}
-          </Button>
-        </div>
-      )}
       <Picture preload={lcp}>
         <Source
           media="(max-width: 767px)"
@@ -145,8 +107,8 @@ function BannerItem(
           media="(min-width: 768px)"
           fetchPriority={lcp ? "high" : "auto"}
           src={desktop}
-          width={1440}
-          height={600}
+          width={1993}
+          height={400}
         />
         <img
           class="object-cover w-full h-full"
@@ -162,24 +124,13 @@ function BannerItem(
 function Dots({ images, interval = 0 }: Props) {
   return (
     <>
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-          @property --dot-progress {
-            syntax: '<percentage>';
-            inherits: false;
-            initial-value: 0%;
-          }
-          `,
-        }}
-      />
-      <ul class="carousel justify-center col-span-full gap-6 z-10 row-start-4">
+      <ul class="carousel justify-center col-span-full gap-2 z-10">
         {images?.map((_, index) => (
           <li class="carousel-item">
             <Slider.Dot index={index}>
               <div class="py-5">
                 <div
-                  class="w-16 sm:w-20 h-0.5 rounded group-disabled:animate-progress bg-gradient-to-r from-base-100 from-[length:var(--dot-progress)] to-[rgba(255,255,255,0.4)] to-[length:var(--dot-progress)]"
+                  class="w-2 h-2 rounded bg-slate-300 group-disabled:bg-red-600"
                   style={{ animationDuration: `${interval}s` }}
                 />
               </div>

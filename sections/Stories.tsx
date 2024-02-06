@@ -1,38 +1,65 @@
-import type { Cep } from "../loaders/ceps.ts";
+import { clx } from "../sdk/clx.ts";
+import { margin as MarginObject } from "../constants.tsx";
+import type { MarginInterface } from "../constants.tsx";
+import type { ImageWidget } from "apps/admin/widgets.ts";
+import Container from "./Layout/Container.tsx";
+import Image from "apps/website/components/Image.tsx";
+
+/**
+ * @titleBy alt
+ */
+export interface Storie {
+  alt: string;
+  src: ImageWidget;
+  title?: string;
+  href: string;
+  /** @default 85 */
+  size: number;
+}
 
 export interface Props {
-  items: Lorem[];
+  stories: Storie[];
+  margin?: MarginInterface;
 }
 
-export interface Lorem {
-  /** @default TextoAlternativo */
-  alt: string;
-  /** @format image-uri */
-  src: string;
-  /** @default exemplo */
-  title: string;
-  href: string;
-  size: "lg" | "md" | "full";
-  cep: Cep;
-}
-
-export default function Stories({ items }: Props) {
+function GetStories({ stories, margin }: Props) {
   return (
-    <ul className="flex items-center justify-center gap-4">
-      {items && items.length > 0 && items.map((item) => {
+    <ul
+      class={clx(
+        "flex items-center sm:justify-center gap-4 overflow-x-auto",
+        MarginObject.y.desk[margin?.deskMarginY ?? "none"],
+        MarginObject.y.mobi[margin?.mobiMarginY ?? "none"],
+      )}
+    >
+      {stories && stories.length > 0 && stories.map((storie) => {
         return (
-          <a href={item.href}>
-            <img
-              className={"rounded-" + item.size}
-              src={item.src}
-              alt={item.alt}
-              width="85"
-              height="85"
+          <a href={storie.href}>
+            <Image
+              class="rounded-full"
+              src={storie.src}
+              alt={storie.alt}
+              width={storie.size}
+              height={storie.size}
             />
-            <p>{item.cep?.logradouro}</p>
+            {storie.title ? <p className="text-center">{storie.title}</p> : ""}
           </a>
         );
       })}
     </ul>
   );
 }
+
+function Stories(props: Props) {
+  return (
+    <>
+      <Container
+        children={{
+          Component: GetStories,
+          props: { ...props },
+        }}
+      />
+    </>
+  );
+}
+
+export default Stories;

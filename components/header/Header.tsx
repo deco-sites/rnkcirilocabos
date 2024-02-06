@@ -1,12 +1,42 @@
+import { clx } from "$store/sdk/clx.ts";
 import type { Props as SearchbarProps } from "$store/components/search/Searchbar.tsx";
 import Drawers from "$store/islands/Header/Drawers.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
 import type { ImageWidget } from "apps/admin/widgets.ts";
-import type { SiteNavigationElement } from "apps/commerce/types.ts";
 import Alert from "./Alert.tsx";
 import Navbar from "./Navbar.tsx";
-import { headerHeight } from "./constants.ts";
+import { header } from "$store/constants.tsx";
+import type { Props as ProductShelfProps } from "../product/ProductShelf.tsx";
+import type { AvailableIcons } from "$store/components/ui/Icon.tsx";
 
+/** @titleBy url */
+export interface NavigationTemplate {
+  /** The name of the item. */
+  name?: string;
+  /** URL of the item. */
+  url?: string;
+}
+
+export interface Navigation extends NavigationTemplate {
+  children?: Array<
+    NavigationTemplate & {
+      children?: Array<
+        NavigationTemplate & {
+          children?: Array<
+            NavigationTemplate & {
+              children?: Array<
+                NavigationTemplate & {
+                  children?: NavigationTemplate[];
+                }
+              >;
+            }
+          >;
+        }
+      >;
+    }
+  >;
+  shelf?: ProductShelfProps;
+}
 export interface Logo {
   src: ImageWidget;
   alt: string;
@@ -20,8 +50,14 @@ export interface Buttons {
   hideCartButton?: boolean;
 }
 
+/** @titleBy text */
+export interface Alerts {
+  text?: string;
+  icon?: AvailableIcons;
+}
+
 export interface Props {
-  alerts?: string[];
+  alerts?: Alerts[];
 
   /** @title Search Bar */
   searchbar?: Omit<SearchbarProps, "platform">;
@@ -30,7 +66,7 @@ export interface Props {
    * @title Navigation items
    * @description Navigation items used both on mobile and desktop menus
    */
-  navItems?: SiteNavigationElement[] | null;
+  navItems?: Navigation[] | null;
 
   /** @title Logo */
   logo?: Logo;
@@ -45,22 +81,18 @@ function Header({
   searchbar,
   navItems = [
     {
-      "@type": "SiteNavigationElement",
       name: "Feminino",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Masculino",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Sale",
       url: "/",
     },
     {
-      "@type": "SiteNavigationElement",
       name: "Linktree",
       url: "/",
     },
@@ -72,7 +104,7 @@ function Header({
     height: 16,
     alt: "Logo",
   },
-  logoPosition = "center",
+  logoPosition = "left",
   buttons,
 }: Props) {
   const platform = usePlatform();
@@ -80,21 +112,29 @@ function Header({
 
   return (
     <>
-      <header style={{ height: headerHeight }}>
+      <header
+        class={clx(
+          "block",
+          header.desk.height,
+          header.mobi.height,
+        )}
+      >
         <Drawers
           menu={{ items }}
           searchbar={searchbar}
           platform={platform}
         >
-          <div class="bg-base-100 fixed w-full z-50">
+          <div class="bg-danger fixed w-full z-50">
             {alerts && alerts.length > 0 && <Alert alerts={alerts} />}
-            <Navbar
-              items={items}
-              searchbar={searchbar && { ...searchbar, platform }}
-              logo={logo}
-              logoPosition={logoPosition}
-              buttons={buttons}
-            />
+            <div class="container px-3">
+              <Navbar
+                items={items}
+                searchbar={searchbar && { ...searchbar, platform }}
+                logo={logo}
+                logoPosition={logoPosition}
+                buttons={buttons}
+              />
+            </div>
           </div>
         </Drawers>
       </header>

@@ -7,9 +7,9 @@ interface Props {
 }
 
 const fontSizeClasses = {
-  "Small": "lg:text-2xl",
-  "Normal": "lg:text-3xl",
-  "Large": "lg:text-4xl",
+  "Small": "lg:text-sm",
+  "Normal": "lg:text-lg",
+  "Large": "lg:text-2xl",
 };
 
 function Header(props: Props) {
@@ -25,7 +25,7 @@ function Header(props: Props) {
             {props.title &&
               (
                 <h1
-                  class={`text-2xl font-light leading-8 lg:leading-10
+                  class={`text-sm font-light leading-8 lg:leading-10
                   ${
                     props.colorReverse
                       ? "text-primary-content"

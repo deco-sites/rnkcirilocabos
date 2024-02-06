@@ -8,7 +8,7 @@ export interface Props {
 
 function GetUserGithub({ buttonText }: Props) {
   const [start, setStart] = useState(false);
-  const [response, setResponse] = useState(false||Object);
+  const [response, setResponse] = useState(false || Object);
 
   const handleSubmit: JSX.GenericEventHandler<HTMLFormElement> = async (e) => {
     try {
@@ -28,53 +28,73 @@ function GetUserGithub({ buttonText }: Props) {
   function List() {
     return (
       <>
-        {start ? (
-          <>
-            <div class="mt-5 p-5 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-white">
-              {start && !response ? (
-                <>
-                  <p class="text-lg text-center">Carregando...</p>
-                </>
-              ) : (
-                <>
-                  {response.message ? (
+        {start
+          ? (
+            <>
+              <div class="mt-5 p-5 w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 text-white">
+                {start && !response
+                  ? (
                     <>
-                      <p class="text-lg text-center">{response.message}</p>
+                      <p class="text-lg text-center">Carregando...</p>
                     </>
-                  ) : (
+                  )
+                  : (
                     <>
-                      <div class="flex justify-center">
-                        <img class="w-24 h-24 mb-2 rounded-full" src={response.avatar_url} alt={response.name + ' Image'} />
-                      </div>
-                      <p class="text-lg text-center">{response.name}</p>
-                      <p class="text-sm text-center">{response.login}</p>
-                      {
-                        response.location || response.company ? (
+                      {response.message
+                        ? (
                           <>
-                            <dl class="mt-3">
-                              {response.location ? (
-                                <>
-                                  <dt class="text-sm italic text-slate-400">Location:</dt>
-                                  <dd>{response.location}</dd>
-                                </>
-                              ) : <></>}
-                              {response.company ? (
-                                <>
-                                  <dt class="mt-2 text-sm italic text-slate-400">Company:</dt>
-                                  <dd>{response.company}</dd>
-                                </>
-                              ) : <></>}
-                            </dl>
+                            <p class="text-lg text-center">
+                              {response.message}
+                            </p>
                           </>
-                        ) : <></>
-                      }
+                        )
+                        : (
+                          <>
+                            <div class="flex justify-center">
+                              <img
+                                class="w-24 h-24 mb-2 rounded-full"
+                                src={response.avatar_url}
+                                alt={response.name + " Image"}
+                              />
+                            </div>
+                            <p class="text-lg text-center">{response.name}</p>
+                            <p class="text-sm text-center">{response.login}</p>
+                            {response.location || response.company
+                              ? (
+                                <>
+                                  <dl class="mt-3">
+                                    {response.location
+                                      ? (
+                                        <>
+                                          <dt class="text-sm italic text-slate-400">
+                                            Location:
+                                          </dt>
+                                          <dd>{response.location}</dd>
+                                        </>
+                                      )
+                                      : <></>}
+                                    {response.company
+                                      ? (
+                                        <>
+                                          <dt class="mt-2 text-sm italic text-slate-400">
+                                            Company:
+                                          </dt>
+                                          <dd>{response.company}</dd>
+                                        </>
+                                      )
+                                      : <></>}
+                                  </dl>
+                                </>
+                              )
+                              : <></>}
+                          </>
+                        )}
                     </>
                   )}
-                </>
-              )}
-            </div>
-          </>
-        ) : <></>}
+              </div>
+            </>
+          )
+          : <></>}
       </>
     );
   }
@@ -89,7 +109,9 @@ function GetUserGithub({ buttonText }: Props) {
             class="input input-bordered"
             required
           />
-          <button type="submit" class="btn">{buttonText ? buttonText : 'Buscar'}</button>
+          <button type="submit" class="btn">
+            {buttonText ? buttonText : "Buscar"}
+          </button>
         </div>
         <List />
       </form>

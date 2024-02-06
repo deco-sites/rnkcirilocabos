@@ -27,7 +27,7 @@ function Container({ children }: Props) {
   }
 
   return (
-    <div class="container">
+    <div class="container px-3">
       <children.Component {...children.props} />
     </div>
   );

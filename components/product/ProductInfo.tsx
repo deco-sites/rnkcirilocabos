@@ -30,13 +30,13 @@ interface Props {
   };
 }
 
+// Componente Principal - Renderiza as informações do Produto;
 function ProductInfo({ page, layout }: Props) {
   const platform = usePlatform();
   const id = useId();
 
-  if (page === null) {
-    throw new Error("Missing Product Details Page Info");
-  }
+  // Verificação se a página de detalhes do produto foi fornecida
+  if (page === null) throw new Error("Missing Product Details Page Info");
 
   const { breadcrumbList, product } = page;
   const {
@@ -67,6 +67,24 @@ function ProductInfo({ page, layout }: Props) {
     breadcrumbList: breadcrumb,
     price,
     listPrice,
+  });
+
+  // Verificando se há propriedades de vídeo;
+  const videoProperties = product.isVariantOf?.additionalProperty?.filter(
+    (property) => property.name === "Video",
+  );
+
+  // Construindo o iframe se houver link;
+  const videoIframe = videoProperties?.map((video) => {
+    // Convertendo a URL para o formato correto do YouTube;
+    const embedUrl = video.value?.includes("youtube.com/watch")
+      ? video.value.replace("/watch?v=", "/embed/")
+      : video.value;
+
+    // Remover parâmetros adicionais da URL
+    const clearUrl = embedUrl?.split("&")[0];
+
+    return `<iframe width="560" height="315" src="${clearUrl}" frameborder="0" allowfullscreen></iframe>`;
   });
 
   return (
@@ -192,6 +210,12 @@ function ProductInfo({ page, layout }: Props) {
                 class="ml-2 mt-2"
                 dangerouslySetInnerHTML={{ __html: description }}
               />
+
+              {/* Adicionando o iframe do vídeo */}
+              {videoIframe &&
+                videoIframe.map((iframe) => (
+                  <div dangerouslySetInnerHTML={{ __html: iframe }} />
+                ))}
             </details>
           )}
         </span>

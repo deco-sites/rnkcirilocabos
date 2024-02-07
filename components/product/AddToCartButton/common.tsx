@@ -1,3 +1,4 @@
+import Icon from "$store/components/ui/Icon.tsx";
 import Button from "$store/components/ui/Button.tsx";
 import { sendEvent } from "$store/sdk/analytics.tsx";
 import { useUI } from "$store/sdk/useUI.ts";
@@ -41,8 +42,12 @@ export default function AddToCartButton(props: Props) {
   const btnProps = useAddToCart(props);
 
   return (
-    <Button {...btnProps} class="btn-primary">
-      Adicionar à Sacola
+    <Button
+      {...btnProps}
+      class="focus:outline-none text-white bg-[#128a65] hover:bg-[#0c5d44] font-medium text-sm px-5 py-2.5 uppercase"
+    >
+      <Icon id="ShoppingCart" size={20} strokeWidth={2} />
+      Comprar
     </Button>
   );
 }

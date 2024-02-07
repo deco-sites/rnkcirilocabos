@@ -2,7 +2,7 @@ import type { Product } from "apps/commerce/types.ts";
 
 interface Props { product: Product; }
 
-function ProductDescription({product}: {product: Product}) {
+function ProductDescription({product}: Props) {
     // Descrição do Produto
     const description = product.description || (product.isVariantOf && product.isVariantOf.description);
 

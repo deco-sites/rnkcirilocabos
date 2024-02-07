@@ -79,7 +79,7 @@ function ProductInfo({ page, layout }: Props) {
           {gtin && <span class="text-sm text-base-300">Cod. {gtin}</span>}
         </div>
         <h1>
-          <span class="font-medium text-xl capitalize">
+          <span class="font-open-sans text-xl capitalize">
             {layout?.name === "concat"
               ? `${isVariantOf?.name} ${name}`
               : layout?.name === "productGroup"

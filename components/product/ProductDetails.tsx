@@ -20,7 +20,6 @@ import type { ProductDetailsPage } from "apps/commerce/types.ts";
 import Image from "apps/website/components/Image.tsx";
 import Container from "$store/sections/Layout/Container.tsx";
 import { usePlatform } from "$store/sdk/usePlatform.tsx";
-import ProductSelector from "./ProductVariantSelector.tsx";
 
 export type Variant = "front-back" | "slider" | "auto";
 
@@ -60,38 +59,38 @@ function NotFound() {
   );
 }
 
-function ProductInfo({
-  page,
-  shipmentPolitics,
-  shareableNetworks,
-}: {
-  page: ProductDetailsPage;
-  shipmentPolitics?: Props["shipmentPolitics"];
-  shareableNetworks?: Props["shareableNetworks"];
-}) {
+function ProductInfo({ page }: { page: ProductDetailsPage }) {
   const platform = usePlatform();
+
   const {
     breadcrumbList,
     product,
   } = page;
+
   const {
-    description,
     productID,
     offers,
     name,
     isVariantOf,
     additionalProperty = [],
   } = product;
-  const { price = 0, listPrice, seller = "1", installments, availability } =
-    useOffer(
-      offers,
-    );
+
+  const {
+    price = 0,
+    listPrice,
+    seller = "1",
+    installments,
+    availability,
+  } = useOffer(offers);
+
   const productGroupID = isVariantOf?.productGroupID ?? "";
+
   const breadcrumb = {
     ...breadcrumbList,
     itemListElement: breadcrumbList?.itemListElement.slice(0, -1),
     numberOfItems: breadcrumbList.numberOfItems - 1,
   };
+
   const eventItem = mapProductToAnalyticsItem({
     product,
     breadcrumbList: breadcrumb,
@@ -161,14 +160,6 @@ function ProductInfo({
         </div>
         <span className="text-sm text-black">{installments}</span>
       </div>
-      {
-        /*
-        Sku Selector
-        <div className="mt-4 sm:mt-5">
-          <ProductSelector product={product} />
-        </div>
-      */
-      }
       {/* Add to Cart button */}
       <div className="mt-4 lg:mt-10 flex md:flex-row flex-col gap-[30px]">
         {availability === "https://schema.org/InStock"
@@ -239,51 +230,6 @@ function ProductInfo({
           )
           : <OutOfStock productID={productID} />}
       </div>
-      {/* Share Product on Social Networks */}
-      {
-        /*shareableNetworks && (
-        <div className="flex items-center gap-5 my-5">
-          <span className="text-xs text-base-300">Compartilhar</span>
-          <ul className="gap-2 flex items-center justify-between">
-            {shareableNetworks.map((network) => (
-              <li className="bg-base-300 w-8 h-8 rounded-full hover:bg-emphasis transition-all">
-                <a
-                  //   href={getShareLink({
-                  //     network,
-                  //     productName: isVariantOf?.name ?? name ?? "",
-                  //     url: url ?? "",
-                  //   })}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center w-full h-full text-neutral-100"
-                >
-                  <Icon id={network} width={20} height={20} />
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      )*/
-      }
-
-      {/* Analytics Event */}
-      {
-        /* <SendEventOnLoad
-        event={{
-          name: "view_item",
-          params: {
-            items: [
-              mapProductToAnalyticsItem({
-                product,
-                breadcrumbList,
-                price,
-                listPrice,
-              }),
-            ],
-          },
-        }}
-      />*/
-      }
     </>
   );
 }
@@ -353,20 +299,12 @@ const useStableImages = (product: ProductDetailsPage["product"]) => {
 function Details({
   page,
   variant,
-  shipmentPolitics,
-  shareableNetworks,
 }: {
   page: ProductDetailsPage;
   variant: Variant;
-  shipmentPolitics?: Props["shipmentPolitics"];
-  shareableNetworks?: Props["shareableNetworks"];
 }) {
   const { product, breadcrumbList } = page;
-  const { description, offers } = product;
-  const {
-    price,
-    listPrice,
-  } = useOffer(offers);
+  const { description } = product;
   const id = `product-image-gallery:${useId()}`;
   const images = useStableImages(product);
 
@@ -438,29 +376,12 @@ function Details({
                   ))}
                 </ul>
               </div>
-
-              {/* Discount tag */}
-              {
-                /*price && listPrice && price !== listPrice
-                ? (
-                  //   <DiscountBadge
-                  //     price={price}
-                  //     listPrice={listPrice}
-                  //     className="lg:left-auto lg:right-0 left-4"
-                  //   />
-                )
-                : null*/
-              }
             </div>
           </div>
 
           {/* Product Info */}
           <div className="lg:max-w-[748px] w-full">
-            <ProductInfo
-              page={page}
-              shipmentPolitics={shipmentPolitics}
-              shareableNetworks={shareableNetworks}
-            />
+            <ProductInfo page={page} />
           </div>
         </div>
         {description && (
@@ -516,8 +437,6 @@ function Details({
 function GetProductDetails({
   page,
   variant: maybeVar = "auto",
-  shipmentPolitics,
-  shareableNetworks,
 }: Props) {
   /**
    * Showcase the different product views we have on this template. In case there are less
@@ -537,8 +456,6 @@ function GetProductDetails({
           <Details
             page={page}
             variant={variant}
-            shipmentPolitics={shipmentPolitics}
-            shareableNetworks={shareableNetworks}
           />
         )
         : <NotFound />}

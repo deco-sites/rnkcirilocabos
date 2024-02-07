@@ -170,7 +170,7 @@ function ProductInfo({
       */
       }
       {/* Add to Cart button */}
-      <div className="mt-4 lg:mt-10 flex gap-[30px]">
+      <div className="mt-4 lg:mt-10 flex md:flex-row flex-col gap-[30px]">
         {availability === "https://schema.org/InStock"
           ? (
             <>

@@ -33,13 +33,13 @@ export default function GallerySlider(props: Props) {
     page: { product: { image: images = [] } },
     layout: { width, height },
   } = props;
-  const aspectRatio = `${width} / ${height}`;
+  const aspectRatio = `${1200} / ${1200}`;
 
   return (
-    <div id={id} class="grid grid-flow-row sm:grid-flow-col">
+    <div id={id} class="grid grid-flow-row">
       {/* Image Slider */}
-      <div class="relative order-1 sm:order-2">
-        <Slider class="carousel carousel-center gap-6 w-screen sm:w-[40vw]">
+      <div class="relative lg:w-[600px] lg:h-[455px]">
+        <Slider class="carousel carousel-center gap-6 lg:w-[600px] lg:h-[455px]">
           {images.map((img, index) => (
             <Slider.Item
               index={index}
@@ -51,8 +51,8 @@ export default function GallerySlider(props: Props) {
                 style={{ aspectRatio }}
                 src={img.url!}
                 alt={img.alternateName}
-                width={width}
-                height={height}
+                width={1200}
+                height={1200}
                 // Preload LCP image for better web vitals
                 preload={index === 0}
                 loading={index === 0 ? "eager" : "lazy"}
@@ -61,7 +61,8 @@ export default function GallerySlider(props: Props) {
           ))}
         </Slider>
 
-        <Slider.PrevButton
+        {
+          /* <Slider.PrevButton
           class="no-animation absolute left-2 top-1/2 btn btn-circle btn-outline"
           disabled
         >
@@ -73,7 +74,8 @@ export default function GallerySlider(props: Props) {
           disabled={images.length < 2}
         >
           <Icon size={24} id="ChevronRight" strokeWidth={3} />
-        </Slider.NextButton>
+        </Slider.NextButton> */
+        }
 
         <div class="absolute top-2 right-2 bg-base-100 rounded-full">
           <ProductImageZoom
@@ -85,18 +87,19 @@ export default function GallerySlider(props: Props) {
       </div>
 
       {/* Dots */}
-      <ul class="carousel carousel-center gap-1 px-4 sm:px-0 sm:flex-col order-2 sm:order-1">
+      <ul class="carousel carousel-center gap-1">
         {images.map((img, index) => (
-          <li class="carousel-item min-w-[63px] sm:min-w-[100px]">
+          <li class="carousel-item">
             <Slider.Dot index={index}>
-              <Image
-                style={{ aspectRatio }}
-                class="group-disabled:border-base-300 border rounded "
-                width={63}
-                height={87.5}
-                src={img.url!}
-                alt={img.alternateName}
-              />
+              <div class="flex items-center justify-center w-[58px] h-[58px] group-disabled:border-base-300 border rounded overflow-hidden">
+                <Image
+                  style={{ aspectRatio }}
+                  width={58}
+                  height={58}
+                  src={img.url!}
+                  alt={img.alternateName}
+                />
+              </div>
             </Slider.Dot>
           </li>
         ))}

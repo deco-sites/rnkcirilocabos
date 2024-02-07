@@ -179,7 +179,7 @@ function ProductCard({
 
         {/* Discount % */}
         <div class="absolute left-0 bottom-2 z-10">
-          {!l?.hide?.discount && listPrice && price && (
+          {!l?.hide?.discount && listPrice && price && listPrice > price && (
             <>
               <div class="inline-block rounded-t-lg text-[12px] bg-[#3c3c44] py-[5px] px-[8px]">
                 <span class="text-white font-normal">
@@ -279,7 +279,7 @@ function ProductCard({
                 )
                 : (
                   <h2
-                    class="text-[13px] font-normal line-clamp-3 text-black"
+                    class="text-[13px] font-normal line-clamp-2 text-black h-[39px]"
                     dangerouslySetInnerHTML={{ __html: name ?? "" }}
                   />
                 )}
@@ -307,14 +307,18 @@ function ProductCard({
                 } ${align === "center" ? "justify-center" : "justify-end"}`}
               >
                 <div
-                  class={`text-base-300 text-xs font-light ${
+                  class={`text-base-300 text-xs font-light h-[16px] ${
                     l?.basics?.oldPriceSize === "Normal" ? "lg:text-sm" : ""
                   }`}
                 >
-                  De:{" "}
-                  <span class="line-through">
-                    {formatPrice(listPrice, offers?.priceCurrency)}
-                  </span>
+                  {listPrice && price && listPrice > price && (
+                    <>
+                      De:{" "}
+                      <span class="line-through">
+                        {formatPrice(listPrice, offers?.priceCurrency)}
+                      </span>
+                    </>
+                  )}
                 </div>
                 <div class="text-black">
                   Por:{" "}

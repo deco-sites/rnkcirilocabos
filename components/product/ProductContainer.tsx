@@ -67,9 +67,11 @@ function ProductContainer({ page, layout }: Props) {
 
   return (
     <>
-      <div class="container">
+      <div class="container px-3">
         {/* Breadcrumb */}
-        <Breadcrumb itemListElement={breadcrumb.itemListElement} />
+        <div class="lg:py-4 py-2">
+            <Breadcrumb itemListElement={breadcrumb.itemListElement} />
+        </div>
 
         {/* Product Sections */}
         <div class="flex flex-wrap">

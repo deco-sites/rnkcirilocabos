@@ -43,11 +43,9 @@ export default function AddToCartButton(props: Props) {
 
   return (
     <Button
-      {...btnProps}
-      class="focus:outline-none text-white bg-[#128a65] hover:bg-[#0c5d44] font-medium text-sm px-5 py-2.5 uppercase"
-    >
-      <Icon id="ShoppingCart" size={20} strokeWidth={2} />
-      Comprar
+      {...btnProps} 
+      class="focus:outline-none text-white bg-[#128a65] hover:bg-[#0c5d44] max-w-[240px] flex justify-center rounded font-medium text-sm px-5 py-2.5 uppercase">
+        <Icon id="ShoppingCart" size={20} strokeWidth={2} /> Comprar
     </Button>
   );
 }

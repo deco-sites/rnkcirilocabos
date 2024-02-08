@@ -26,17 +26,15 @@ function ProductDescription({product}: Props) {
     <>
         {/* Description card */}
         <div class="mt-4 sm:mt-6">
-            <span class="text-sm">
+            <span class="text-sm font-open-sans">
             {description && (
-                <details>
-
-                    <summary class="cursor-pointer">Descrição</summary>
+                <>
+                    <h3 class="cursor-pointer font-semibold text-lg">Descrição</h3>
                     <div class="ml-2 mt-2" dangerouslySetInnerHTML={{ __html: description }} />
 
                     {/* Adicionando o iframe do vídeo */}
                     {videoIframe && videoIframe.map((iframe) => ( <div dangerouslySetInnerHTML={{ __html: iframe }} /> ))}
-
-                </details>
+                </>
             )}
             </span>
         </div>

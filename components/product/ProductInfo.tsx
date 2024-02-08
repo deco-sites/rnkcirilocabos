@@ -70,13 +70,48 @@ function ProductInfo({ page, layout }: Props) {
     listPrice,
   });
 
+  console.log("lorem", product);
+
   return (
-    <div class="flex flex-col" id={id}>
+    <div className="flex flex-col lg:max-w-[748px] lg:w-full" id={id}>
       <Breadcrumb itemListElement={breadcrumb.itemListElement} />
       {/* Code and name */}
-      <div class="mt-4 sm:mt-8">
-        <div>
-          {gtin && <span class="text-sm text-base-300">Cod. {gtin}</span>}
+      <div className="mt-4 sm:mt-8">
+        <div className="flex items-center justify-between gap-2">
+          <h1>
+            <span className="font-normal capitalize text-[24px]">
+              {layout?.name === "concat"
+                ? `${isVariantOf?.name} ${name}`
+                : layout?.name === "productGroup"
+                ? isVariantOf?.name
+                : name}
+            </span>
+          </h1>
+          {/* Favorites button */}
+          <div>
+            {availability === "https://schema.org/InStock"
+              ? (
+                <>
+                  {platform === "vtex" && (
+                    <>
+                      <WishlistButtonVtex
+                        productID={productID}
+                        productGroupID={productGroupID}
+                      />
+                    </>
+                  )}
+                  {platform === "wake" && (
+                    <>
+                      <WishlistButtonWake
+                        productID={productID}
+                        productGroupID={productGroupID}
+                      />
+                    </>
+                  )}
+                </>
+              )
+              : <OutOfStock productID={productID} />}
+          </div>
         </div>
         <h1>
           <span class="font-open-sans text-xl capitalize">
@@ -89,40 +124,58 @@ function ProductInfo({ page, layout }: Props) {
         </h1>
       </div>
       {/* Prices */}
-      <div class="mt-4">
-        <div class="flex flex-row gap-2 items-center">
+      <div className="mt-4">
+        <div className="flex flex-col gap-2">
           {(listPrice ?? 0) > price && (
-            <span class="line-through text-base-300 text-xs">
-              {formatPrice(listPrice, offers?.priceCurrency)}
+            <span className="text-base-300 text-xs">
+              De:{" "}
+              <span className="line-through">
+                {formatPrice(listPrice, offers?.priceCurrency)}
+              </span>
             </span>
           )}
-          <span class="font-medium text-xl text-secondary">
-            {formatPrice(price, offers?.priceCurrency)}
+          <span className="flex flex-row items-center text-xs gap-1 font-bold leading-none">
+            Por:{" "}
+            <span className="font-medium text-[30px] text-danger">
+              {formatPrice(price, offers?.priceCurrency)}
+            </span>
           </span>
         </div>
-        <span class="text-sm text-base-300">{installments}</span>
+        <span className="text-sm text-black">{installments}</span>
       </div>
       {/* Sku Selector */}
-      <div class="mt-4 sm:mt-6">
+      <div className="mt-4 sm:mt-6">
         <ProductSelector product={product} />
       </div>
-      {/* Add to Cart and Favorites button */}
-      <div class="mt-4 sm:mt-10 flex flex-col gap-2">
+      {/* Add to Cart button */}
+      <div className="flex flex-col sm:flex-row gap-2">
         {availability === "https://schema.org/InStock"
           ? (
             <>
               {platform === "vtex" && (
                 <>
-                  <AddToCartButtonVTEX
-                    eventParams={{ items: [eventItem] }}
-                    productID={productID}
-                    seller={seller}
+                  <ShippingSimulation
+                    items={[
+                      {
+                        id: Number(product.sku),
+                        quantity: 1,
+                        seller: seller,
+                      },
+                    ]}
                   />
-                  <WishlistButtonVtex
-                    variant="full"
-                    productID={productID}
-                    productGroupID={productGroupID}
-                  />
+                  <div className="flex flex-col">
+                    <AddToCartButtonVTEX
+                      eventParams={{ items: [eventItem] }}
+                      productID={productID}
+                      seller={seller}
+                    />
+                    <a
+                      className="btn btn-outline btn-sm border-green-500 text-green-500 hover:text-white hover:bg-green-500 hover:border-green-500 mt-2"
+                      href="https://api.whatsapp.com/send?phone=5511946265235&text=Ol%C3%A1%20Cirilo%20gostaria%20de%20mais%20detalhes%20sobre%20este%20produto%3A%20%0A%20https%3A%2F%2Fwww.cirilocabos.com.br%2Fhdmi-extender-tx-rx-extensor-via-cabo-de-rede-ate-120-metros%2Fp%20%0A%201%20-%20Televendas%20%0A%202%20-%20SAC%20%0A%20Digite%20uma%20op%C3%A7%C3%A3o%3A%20"
+                    >
+                      Comprar pelo WhatsApp
+                    </a>
+                  </div>
                 </>
               )}
               {platform === "wake" && (
@@ -130,11 +183,6 @@ function ProductInfo({ page, layout }: Props) {
                   <AddToCartButtonWake
                     eventParams={{ items: [eventItem] }}
                     productID={productID}
-                  />
-                  <WishlistButtonWake
-                    variant="full"
-                    productID={productID}
-                    productGroupID={productGroupID}
                   />
                 </>
               )}
@@ -168,20 +216,6 @@ function ProductInfo({ page, layout }: Props) {
             </>
           )
           : <OutOfStock productID={productID} />}
-      </div>
-      {/* Shipping Simulation */}
-      <div class="mt-8">
-        {platform === "vtex" && (
-          <ShippingSimulation
-            items={[
-              {
-                id: Number(product.sku),
-                quantity: 1,
-                seller: seller,
-              },
-            ]}
-          />
-        )}
       </div>
       {/* Description card */}
       <ProductDescription product={product} />

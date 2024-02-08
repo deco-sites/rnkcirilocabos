@@ -43,27 +43,31 @@ function ShippingContent({ simulation }: {
   }
 
   return (
-    <ul class="flex flex-col gap-4 p-4 bg-base-200 rounded-[4px]">
+    <ul class="absolute top-[calc(100%+8px)] left-0 right-0 bg-white">
       {methods.map((method) => (
-        <li class="flex justify-between items-center border-base-200 not-first-child:border-t">
-          <span class="text-button text-center">
-            Entrega {method.name}
-          </span>
-          <span class="text-button">
-            até {formatShippingEstimate(method.shippingEstimate)}
-          </span>
-          <span class="text-base font-semibold text-right">
-            {method.price === 0 ? "Grátis" : (
-              formatPrice(method.price / 100, currencyCode, locale)
-            )}
-          </span>
+        <li class="border border-slate-300 py-[2px] px-[6px]">
+          <div class="flex items-center justify-between">
+            <div class="text-sm text-button font-semibold">
+              {method.name}
+            </div>
+            <div class="text-sm">
+              {method.price === 0 ? "Grátis" : (
+                formatPrice(method.price / 100, currencyCode, locale)
+              )}
+            </div>
+          </div>
+          <div class="text-xs text-slate-500">
+            em até {formatShippingEstimate(method.shippingEstimate)}
+          </div>
         </li>
       ))}
-      <span class="text-base-300">
+      {
+        /* <span class="text-base-300">
         Os prazos de entrega começam a contar a partir da confirmação do
         pagamento e podem variar de acordo com a quantidade de produtos na
         sacola.
-      </span>
+      </span> */
+      }
     </ul>
   );
 }
@@ -92,13 +96,15 @@ function ShippingSimulation({ items }: Props) {
   }, []);
 
   return (
-    <div class="flex flex-col gap-2">
-      <div class="flex flex-col">
+    <div class="flex flex-col relative">
+      {
+        /* <div class="flex flex-col">
         <span>Calcular frete</span>
         <span>
           Informe seu CEP para consultar os prazos de entrega
         </span>
-      </div>
+      </div> */
+      }
 
       <form
         class="join"
@@ -110,8 +116,7 @@ function ShippingSimulation({ items }: Props) {
         <input
           as="input"
           type="text"
-          class="input input-bordered join-item"
-          placeholder="Seu cep aqui"
+          class="input input-bordered join-item sm:w-auto w-full"
           value={postalCode.value}
           maxLength={8}
           size={8}
@@ -120,15 +125,16 @@ function ShippingSimulation({ items }: Props) {
           }}
         />
         <Button type="submit" loading={loading.value} class="join-item">
-          Calcular
+          OK
         </Button>
       </form>
-
-      <div>
-        <div>
-          <ShippingContent simulation={simulateResult} />
-        </div>
-      </div>
+      <a
+        className="text-[#0f3e99] text-sm hover:underline mt-2"
+        href="https://buscacepinter.correios.com.br/app/endereco/index.php?t"
+      >
+        Não sei meu CEP
+      </a>
+      <ShippingContent simulation={simulateResult} />
     </div>
   );
 }

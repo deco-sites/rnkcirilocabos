@@ -20,8 +20,8 @@ export default {
         },
       },
       fontFamily: {
-        'open-sans': ['Open Sans']
-      }
+        "open-sans": ["Open Sans"],
+      },
     },
   },
 };

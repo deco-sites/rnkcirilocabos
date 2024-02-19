@@ -248,7 +248,9 @@ function Footer({
     ? <></>
     : <ButtonLinks content={buttonLinks} />;
   const _stores = layout?.hide?.stores ? <></> : <Stores content={stores} />;
-  const _clearSale = layout?.hide?.clearSale ? <></> : <ClearSale content={clearSale} />;
+  const _clearSale = layout?.hide?.clearSale
+    ? <></>
+    : <ClearSale content={clearSale} />;
 
   return (
     <footer
@@ -383,7 +385,9 @@ function Footer({
         {_clearSale}
       </div>
       <div class="bg-dark text-white py-2">
-        <p className="text-center"><small>2022 @ All Right Reserved to VTEX & Imediata</small></p>
+        <p className="text-center">
+          <small>2022 @ All Right Reserved to VTEX & Imediata</small>
+        </p>
       </div>
       {layout?.hide?.backToTheTop
         ? <></>

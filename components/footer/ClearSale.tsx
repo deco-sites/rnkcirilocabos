@@ -6,7 +6,7 @@ interface Props {
     alt: string;
     width: number;
     height: number;
-  }
+  };
 }
 
 function ClearSale({ content }: Props) {

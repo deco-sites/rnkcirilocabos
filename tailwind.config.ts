@@ -9,6 +9,7 @@ export default {
     extend: {
       colors: {
         "danger": "#fc2726",
+        "dark": "#333",
       },
       animation: {
         sliding: "sliding 30s linear infinite",

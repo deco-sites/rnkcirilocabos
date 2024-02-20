@@ -1,6 +1,7 @@
 import { useSignal } from "@preact/signals";
 import { invoke } from "$store/runtime.ts";
 import type { JSX } from "preact";
+import Container from "$store/sections/Layout/Container.tsx";
 
 export interface Form {
   placeholder?: string;
@@ -24,7 +25,7 @@ export interface Props {
 function Newsletter(
   { content, layout = {} }: Props,
 ) {
-  const { tiled = false } = layout;
+  const { tiled = true } = layout;
   const loading = useSignal(false);
 
   const handleSubmit: JSX.GenericEventHandler<HTMLFormElement> = async (e) => {
@@ -44,13 +45,13 @@ function Newsletter(
 
   return (
     <div
-      class={`flex ${
+      class={`flex text-white ${
         tiled
           ? "flex-col gap-4 lg:flex-row lg:w-full lg:justify-between"
           : "flex-col gap-4"
       }`}
     >
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 justify-center">
         {content?.title && (
           <h3 class={tiled ? "text-2xl lg:text-3xl" : "text-lg"}>
             {content?.title}
@@ -58,7 +59,7 @@ function Newsletter(
         )}
         {content?.description && <div>{content?.description}</div>}
       </div>
-      <div class="flex flex-col gap-4">
+      <div class="flex flex-col gap-4 justify-center">
         <form
           class="form-control"
           onSubmit={handleSubmit}
@@ -71,19 +72,21 @@ function Newsletter(
             />
             <button
               type="submit"
-              class="btn disabled:loading"
+              class="btn border-white text-white bg-transparent hover:bg-white hover:text-dark hover:border-white disabled:loading"
               disabled={loading}
             >
               {content?.form?.buttonText || "Inscrever"}
             </button>
           </div>
         </form>
-        {content?.form?.helpText && (
+        {
+          /* {content?.form?.helpText && (
           <div
             class="text-sm"
             dangerouslySetInnerHTML={{ __html: content?.form?.helpText }}
           />
-        )}
+        )} */
+        }
       </div>
     </div>
   );

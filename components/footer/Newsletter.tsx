@@ -25,7 +25,7 @@ export interface Props {
 function Newsletter(
   { content, layout = {} }: Props,
 ) {
-  const { tiled = false } = layout;
+  const { tiled = true } = layout;
   const loading = useSignal(false);
 
   const handleSubmit: JSX.GenericEventHandler<HTMLFormElement> = async (e) => {

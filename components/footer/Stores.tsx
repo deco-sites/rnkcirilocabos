@@ -1,18 +1,16 @@
 interface Props {
-  content?: {
-    stores?: {
-      label: string;
-      href: string;
-    }[];
-  };
+  stores?: {
+    label: string;
+    href: string;
+  }[];
 }
 
-function Stores({ content }: Props) {
+function Stores({ stores }: Props) {
   return (
     <>
-      {content?.stores && content?.stores.length > 0 && (
+      {stores && stores.length > 0 && (
         <ul>
-          {content.stores.map((store, index) => (
+          {stores.map((store, index) => (
             <li>
               <p class="text-slate-400">
                 <small>Loja {index + 1}</small>

@@ -188,13 +188,6 @@ function Footer({
     ? <></>
     : <ButtonLinks content={buttonLinks} />;
   const _stores = layout?.hide?.stores ? <></> : <Stores stores={stores} />;
-  const _clearSale = layout?.hide?.clearSale
-    ? <></>
-    : (
-      <div class="flex justify-center py-5">
-        <ClearSale content={clearSale} />
-      </div>
-    );
 
   return (
     <footer
@@ -230,7 +223,11 @@ function Footer({
           </div>
         </div>
       </div>
-      {_clearSale}
+      {layout?.hide?.clearSale ? <></> : (
+        <div class="flex justify-center py-5">
+          <ClearSale content={clearSale} />
+        </div>
+      )}
       <div class="bg-dark text-white py-2">
         <p className="text-center">
           <small>2022 @ All Right Reserved to VTEX & Imediata</small>

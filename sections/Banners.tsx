@@ -31,42 +31,31 @@ export interface Banners {
   colsMobi: "1" | "2" | "3" | "4";
 }
 
-function GridBanners({ banners, colsDesk, colsMobi }: Banners) {
-  return (
-    <Grid
-      desktop={{ cols: colsDesk, gap: "4", flow: "Row" }}
-      mobile={{ cols: colsMobi, gap: "4", flow: "Row" }}
-    >
-      {banners && banners.length > 0 && banners.map((banner) => {
-        const { href, src, alt, width, height } = banner;
-        return (
-          <div>
-            <a href={href}>
-              <Image
-                src={src}
-                alt={alt}
-                width={width}
-                height={height}
-                class="rounded object-cover"
-              />
-            </a>
-          </div>
-        );
-      })}
-    </Grid>
-  );
-}
-
 function Banners({ banners, colsDesk, colsMobi }: Banners) {
   return (
-    <>
-      <Container
-        children={{
-          Component: GridBanners,
-          props: { banners, colsDesk, colsMobi },
-        }}
-      />
-    </>
+    <Container>
+      <Grid
+        desktop={{ cols: colsDesk, gap: "4", flow: "Row" }}
+        mobile={{ cols: colsMobi, gap: "4", flow: "Row" }}
+      >
+        {banners && banners.length > 0 && banners.map((banner) => {
+          const { href, src, alt, width, height } = banner;
+          return (
+            <div>
+              <a href={href}>
+                <Image
+                  src={src}
+                  alt={alt}
+                  width={width}
+                  height={height}
+                  class="rounded object-cover"
+                />
+              </a>
+            </div>
+          );
+        })}
+      </Grid>
+    </Container>
   );
 }
 

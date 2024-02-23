@@ -434,7 +434,7 @@ function Details({
   );
 }
 
-function GetProductDetails({
+function ProductDetails({
   page,
   variant: maybeVar = "auto",
 }: Props) {
@@ -450,7 +450,7 @@ function GetProductDetails({
     : maybeVar;
 
   return (
-    <>
+    <Container>
       {page
         ? (
           <Details
@@ -459,20 +459,7 @@ function GetProductDetails({
           />
         )
         : <NotFound />}
-    </>
-  );
-}
-
-function ProductDetails(props: Props) {
-  return (
-    <>
-      <Container
-        children={{
-          Component: GetProductDetails,
-          props: { ...props },
-        }}
-      />
-    </>
+    </Container>
   );
 }
 

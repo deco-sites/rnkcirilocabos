@@ -17,15 +17,9 @@ export interface Props {
   margin?: MarginInterface;
 }
 
-function GetSoloBanner(
-  {
-    alt,
-    src,
-    margin,
-  }: Props,
-) {
+function SoloBanner({ alt, src, margin }: Props) {
   return (
-    <>
+    <Container>
       <Image
         src={src}
         alt={alt}
@@ -41,20 +35,7 @@ function GetSoloBanner(
           MarginObject.bottom.mobi[margin?.mobiMarginBottom ?? "none"],
         )}
       />
-    </>
-  );
-}
-
-function SoloBanner(props: Props) {
-  return (
-    <>
-      <Container
-        children={{
-          Component: GetSoloBanner,
-          props: { ...props },
-        }}
-      />
-    </>
+    </Container>
   );
 }
 

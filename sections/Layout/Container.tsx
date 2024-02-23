@@ -1,34 +1,18 @@
-import { Section } from "deco/blocks/section.ts";
-import { context } from "deco/mod.ts";
+import { type ComponentChildren, type JSX } from "preact";
 
-interface Props {
-  children?: Section;
-}
+type Props = JSX.IntrinsicElements["div"] & {
+  children: ComponentChildren;
+};
 
-function Placeholder() {
+function Container(
+  { className, children, ...rest }: Props,
+) {
   return (
-    <div class="rounded h-48 grid place-content-center w-full bg-base-100 text-base-300 text-sm">
-      Content
-    </div>
-  );
-}
-
-function Container({ children }: Props) {
-  if (!context.isDeploy && typeof children?.Component !== "function") {
-    return (
-      <div class="bg-primary bg-opacity-5 p-4">
-        <Container children={{ Component: Placeholder, props: {} }} />
-      </div>
-    );
-  }
-
-  if (!children) {
-    return null;
-  }
-
-  return (
-    <div class="container px-3">
-      <children.Component {...children.props} />
+    <div
+      className={className ? `container px-3 ${className}` : `container px-3`}
+      {...rest}
+    >
+      {children}
     </div>
   );
 }

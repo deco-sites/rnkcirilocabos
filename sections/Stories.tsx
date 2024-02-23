@@ -22,43 +22,33 @@ export interface Props {
   margin?: MarginInterface;
 }
 
-function GetStories({ stories, margin }: Props) {
+function Stories({ stories, margin }: Props) {
   return (
-    <ul
-      class={clx(
-        "flex items-center sm:justify-center gap-4 overflow-x-auto",
-        MarginObject.y.desk[margin?.deskMarginY ?? "none"],
-        MarginObject.y.mobi[margin?.mobiMarginY ?? "none"],
-      )}
-    >
-      {stories && stories.length > 0 && stories.map((storie) => {
-        return (
-          <a href={storie.href}>
-            <Image
-              class="rounded-full"
-              src={storie.src}
-              alt={storie.alt}
-              width={storie.size}
-              height={storie.size}
-            />
-            {storie.title ? <p className="text-center">{storie.title}</p> : ""}
-          </a>
-        );
-      })}
-    </ul>
-  );
-}
-
-function Stories(props: Props) {
-  return (
-    <>
-      <Container
-        children={{
-          Component: GetStories,
-          props: { ...props },
-        }}
-      />
-    </>
+    <Container>
+      <ul
+        class={clx(
+          "flex items-center sm:justify-center gap-4 overflow-x-auto",
+          MarginObject.y.desk[margin?.deskMarginY ?? "none"],
+          MarginObject.y.mobi[margin?.mobiMarginY ?? "none"],
+        )}
+      >
+        {stories && stories.length > 0 && stories.map((storie) => {
+          const { href, src, alt, size, title } = storie;
+          return (
+            <a href={href}>
+              <Image
+                class="rounded-full"
+                src={src}
+                alt={alt}
+                width={size}
+                height={size}
+              />
+              {title ? <p className="text-center">{title}</p> : ""}
+            </a>
+          );
+        })}
+      </ul>
+    </Container>
   );
 }
 
